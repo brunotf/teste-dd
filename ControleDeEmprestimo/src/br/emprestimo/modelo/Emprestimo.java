@@ -5,6 +5,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeComparator;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
@@ -60,7 +61,8 @@ public class Emprestimo {
 	/**
 	 * valida o formato da data e se o dia do mes eh valido
 	 * 
-	 * @param data no formato dd/MM/yyyy
+	 * @param data
+	 *            no formato dd/MM/yyyy
 	 * @return true se a data estiver no formato valido e false para formato
 	 *         invalido
 	 */
@@ -76,6 +78,17 @@ public class Emprestimo {
 		}
 	}
 
+	public boolean verificaDiaSemana(String data) {
+		DateTimeFormatter fmt = DateTimeFormat.forPattern("dd/MM/YYYY");
+		boolean isValida = false;
+		if (validaData(data)) {
+			DateTime umaData = fmt.parseDateTime(data);
+			 if (umaData.dayOfWeek().getAsText() == "Domingo") {
+				 isValida = true;
+			 }
+		}
+		return isValida;
+	}
 
 	@Override
 	public boolean equals(Object obj) {
